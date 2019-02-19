@@ -28,8 +28,13 @@ namespace testBD
 
         private void refreshView()
         {
-            string query = "SELECT name_med, counter, arrival, sell FROM medic ORDER BY name_med";
-            OleDbCommand command = new OleDbCommand(query, myConnect);
+            //string query = "SELECT name_med, counter, arrival, sell FROM medic ORDER BY name_med";
+
+            OleDbCommand command = myConnect.CreateCommand();
+            command.CommandText = "SELECT name_med, counter, arrival, sell FROM medic WHERE ID = @id";
+            command.Parameters.Add("@id", OleDbType.Integer);
+            command.Parameters[0].Value = 1;
+
             OleDbDataReader reader = command.ExecuteReader();
 
             listView1.Items.Clear();
